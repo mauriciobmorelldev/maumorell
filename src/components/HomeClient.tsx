@@ -27,7 +27,7 @@ const services = [
     ],
   },
   {
-    title: "Tiendanube + Empretienda",
+    title: "Tiendanube / Empretienda",
     description:
       "Implementaciones rápidas con diseño premium, performance y configuración lista para vender.",
     items: ["Plantillas personalizadas", "Pagos y envíos locales", "Escalables"],
@@ -99,11 +99,6 @@ const localPillars = [
 ];
 
 const localFlow = [
-  {
-    title: "Atracción local",
-    description:
-      "SEO local, Google Business Profile, anuncios geolocalizados y redes sociales.",
-  },
   {
     title: "Landing + catálogo",
     description:
@@ -221,7 +216,7 @@ const projects = [
     note: "Referencia de mi historial laboral.",
   },
   {
-    tag: "Referencia regional",
+    tag: "Referencia Internacional",
     title: "Courts",
     url: "https://courts.com",
     description:
@@ -230,7 +225,7 @@ const projects = [
     note: "Referencia de mi historial laboral.",
   },
   {
-    tag: "Referencia local",
+    tag: "Referencia Internacional",
     title: "Imeca",
     url: "https://imeca.com",
     description:
@@ -244,7 +239,7 @@ const projects = [
     description:
       "Identidad visual potente, narrativa personal y animaciones sutiles para destacar expertise.",
     result: "En desarrollo",
-    note: "Proyecto real en fase inicial (confidencial).",
+    note: "Proyecto en fase inicial.",
   },
 ];
 
@@ -837,7 +832,7 @@ export default function HomeClient() {
                     <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
                       Tiempo de implementación
                     </p>
-                    <p className="mt-3 text-xl font-semibold">3 a 5 semanas</p>
+                    <p className="mt-3 text-xl font-semibold">2 a 4 semanas</p>
                   </div>
                   <div className="glass card-tilt rounded-3xl p-5">
                     <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
@@ -935,11 +930,11 @@ export default function HomeClient() {
             <div className="space-y-6 reveal" data-reveal style={withDelay(0)}>
               <p className="kicker">Checklist express</p>
               <h2 className="section-title">
-                ¿Tu ecommerce local está listo para vender?
+                ¿Tu ecommerce está listo para vender?
               </h2>
               <p className="section-subtitle">
                 Marcá los puntos que ya tenés resueltos y te doy un mapa claro
-                de lo que falta para lanzar con fuerza en Corrientes.
+                de lo que falta para lanzar con fuerza.
               </p>
               <div className="rounded-3xl border border-[var(--ring)] bg-[color:var(--surface)] p-6">
                 <p className="kicker">Nivel de preparación</p>
@@ -1254,11 +1249,11 @@ export default function HomeClient() {
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="space-y-4">
                 <h2 className="section-title">
-                  ¿Listo para vender más en Corrientes?
+                  ¿Listo para vender más?
                 </h2>
                 <p className="section-subtitle max-w-xl">
                   Agendemos un diagnóstico y definamos el plan para lanzar tu
-                  proyecto con impacto local y escalable.
+                  proyecto con impacto escalable.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
