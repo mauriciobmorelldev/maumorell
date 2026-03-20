@@ -27,7 +27,7 @@ export default function MotionProvider({
   children: ReactNode;
   reducedMotionPolicy?: ReducedMotionPolicy;
 }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = useReducedMotion() ?? false;
   const reducedMotion =
     reducedMotionPolicy === "always"
       ? true
