@@ -1,2 +1,3 @@
 # maumorell
-Este repo es para portfolio profesional
+
+Portfolio inmersivo en Next.js para servicios de desarrollo web y ecommerce.
