@@ -25,9 +25,10 @@ export default function CursorReactiveParallax({
 }: CursorReactiveParallaxProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const layerRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const quickSetterRef = useRef<
-    Map<string, { x: (value: number) => void; y: (value: number) => void }>
-  >(new Map());
+  type QuickSetter = (value: number | string) => void;
+  const quickSetterRef = useRef<Map<string, { x: QuickSetter; y: QuickSetter }>>(
+    new Map(),
+  );
   const rafRef = useRef<number | null>(null);
   const pointerRef = useRef({ x: 0, y: 0 });
   const currentRef = useRef({ x: 0, y: 0 });
@@ -89,8 +90,9 @@ export default function CursorReactiveParallax({
         const { gsap } = await import("gsap");
         layerRefs.current.forEach((el, key) => {
           quickSetterRef.current.set(key, {
-            x: gsap.quickSetter(el, "x", "px"),
-            y: gsap.quickSetter(el, "y", "px"),
+            // GSAP types return Function; cast to our expected signature for TS.
+            x: gsap.quickSetter(el, "x", "px") as QuickSetter,
+            y: gsap.quickSetter(el, "y", "px") as QuickSetter,
           });
         });
       } catch (error) {
