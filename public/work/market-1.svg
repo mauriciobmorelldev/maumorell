@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6a3d" />
+      <stop offset="100%" stop-color="#2aa6ff" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="#f7f3ec" />
+  <rect x="80" y="90" width="1040" height="540" rx="48" fill="url(#g1)" opacity="0.18" />
+  <rect x="140" y="150" width="420" height="120" rx="24" fill="#ffffff" opacity="0.9" />
+  <rect x="140" y="300" width="920" height="60" rx="18" fill="#ffffff" opacity="0.8" />
+  <rect x="140" y="390" width="920" height="60" rx="18" fill="#ffffff" opacity="0.7" />
+  <rect x="140" y="480" width="620" height="60" rx="18" fill="#ffffff" opacity="0.65" />
+  <text x="180" y="220" font-size="42" fill="#0f141b" font-family="Arial, sans-serif">Promos locales</text>
+  <text x="180" y="340" font-size="26" fill="#0f141b" font-family="Arial, sans-serif">Catálogo con filtros rápidos</text>
+</svg>
