@@ -7,7 +7,6 @@ import CursorReactiveParallax from "@/components/motion/CursorReactiveParallax";
 import SwipeySvgImageGrid from "@/components/motion/SwipeySvgImageGrid";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import ScrollToTop from "@/components/ui/ScrollToTop";
-import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const services = [
   {
@@ -194,6 +193,55 @@ const promoIdeas = [
     description: "Descuento por 24 horas para clientes recurrentes.",
     cta: "Activar promo",
   },
+];
+
+const turnosHighlights = [
+  "Recordatorios WhatsApp",
+  "Pagos anticipados",
+  "Reagendado automático",
+  "Google Calendar",
+  "Lista de espera",
+  "Panel de ocupación",
+];
+
+const turnosStatusLabels = {
+  confirmado: "Confirmado",
+  pendiente: "Pendiente",
+  cancelado: "Cancelado",
+};
+
+type TurnosStatus = keyof typeof turnosStatusLabels;
+
+const turnosPreview: Array<{
+  time: string;
+  name: string;
+  service: string;
+  status: TurnosStatus;
+}> = [
+  {
+    time: "09:30",
+    name: "Lucía B.",
+    service: "Control mensual",
+    status: "confirmado",
+  },
+  {
+    time: "11:00",
+    name: "Carlos R.",
+    service: "Consulta inicial",
+    status: "pendiente",
+  },
+  {
+    time: "14:30",
+    name: "Agus M.",
+    service: "Videollamada",
+    status: "confirmado",
+  },
+];
+
+const turnosMetrics = [
+  { label: "Ocupación", value: "82%" },
+  { label: "No show", value: "6%" },
+  { label: "Slots libres", value: "9" },
 ];
 
 const projects = [
@@ -498,11 +546,11 @@ export default function HomeClient() {
             <a href="#laboratorio">// lab</a>
             <a href="#checklist">// checklist</a>
             <a href="#estimador">// estimador</a>
+            <a href="#turnos">// turnos</a>
             <a href="#casos">// referencias</a>
             <a href="#contacto">// contacto</a>
           </nav>
           <div className="flex items-center gap-3">
-            <ThemeToggle className="hidden md:inline-flex" />
             <button
               className="md:hidden rounded-full border border-[var(--ring)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em]"
               onClick={() => setMenuOpen((prev) => !prev)}
@@ -551,6 +599,9 @@ export default function HomeClient() {
               <a href="#estimador" onClick={() => setMenuOpen(false)}>
                 Estimador
               </a>
+              <a href="#turnos" onClick={() => setMenuOpen(false)}>
+                Simulador de turnos
+              </a>
               <a href="#casos" onClick={() => setMenuOpen(false)}>
                 Referencias
               </a>
@@ -560,9 +611,6 @@ export default function HomeClient() {
               <a href="#contacto" className="btn-primary mt-2">
                 Agendar diagnóstico
               </a>
-              <div className="pt-2">
-                <ThemeToggle />
-              </div>
             </div>
           </div>
         </div>
@@ -1071,6 +1119,88 @@ export default function HomeClient() {
                     Quiero optimizar
                   </a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="turnos"
+          className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10"
+        >
+          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
+            <div className="space-y-6 reveal" data-reveal style={withDelay(0)}>
+              <p className="kicker">Simulador de turnos</p>
+              <h2 className="section-title">Agenda inteligente para servicios locales</h2>
+              <p className="section-subtitle">
+                Mostrá tu sistema en acción con un flujo real: elección de
+                servicio, profesional, horarios disponibles y automatizaciones
+                activas para reducir ausencias.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {turnosHighlights.map((item) => (
+                  <span key={item} className="chip">
+                    {item}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-4">
+                <a className="btn-primary" href="/turnos">
+                  Abrir simulador
+                </a>
+                <a className="btn-secondary" href="/turnos/admin">
+                  Ver panel admin
+                </a>
+                <a className="btn-secondary" href="#contacto">
+                  Quiero un sistema así
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="glass reveal card-tilt rounded-3xl p-6" data-reveal style={withDelay(1)}>
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+                  <span>Agenda demo</span>
+                  <span className="rounded-full bg-[rgba(0,194,168,0.15)] px-3 py-1 text-[0.65rem] font-semibold text-[var(--accent-4)]">
+                    Hoy
+                  </span>
+                </div>
+                <div className="mt-5 space-y-3">
+                  {turnosPreview.map((item) => (
+                    <div
+                      key={`${item.time}-${item.name}`}
+                      className="flex items-center justify-between rounded-2xl border border-[var(--ring)] bg-[color:var(--surface-strong)] px-4 py-3"
+                    >
+                      <div>
+                        <p className="text-sm font-semibold">
+                          {item.time} · {item.name}
+                        </p>
+                        <p className="text-xs text-[var(--muted)]">
+                          {item.service}
+                        </p>
+                      </div>
+                      <span className={`status-pill status-pill--${item.status}`}>
+                        {turnosStatusLabels[item.status]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                {turnosMetrics.map((metric, index) => (
+                  <div
+                    key={metric.label}
+                    className="glass reveal card-tilt rounded-2xl p-4"
+                    data-reveal
+                    style={withDelay(index + 2)}
+                  >
+                    <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+                      {metric.label}
+                    </p>
+                    <p className="mt-3 text-xl font-semibold">{metric.value}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

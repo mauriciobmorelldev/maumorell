@@ -32,6 +32,7 @@ export default function RootLayout({
     <html
       lang="es"
       data-theme="light"
+      style={{ colorScheme: "light" }}
       className={`${spaceGrotesk.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
