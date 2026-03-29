@@ -244,55 +244,6 @@ const turnosMetrics = [
   { label: "Slots libres", value: "9" },
 ];
 
-const estateStatusLabels = {
-  disponible: "Disponible",
-  reservado: "Reservado",
-  vendido: "Vendido",
-};
-
-type EstateStatus = keyof typeof estateStatusLabels;
-
-const estateHighlights = [
-  "Tours 360",
-  "Shortlist inteligente",
-  "Agenda de visitas",
-  "Temporarios premium",
-  "En pozo + renders",
-  "Ventas de desarrollados",
-];
-
-const estatePreview: Array<{
-  title: string;
-  location: string;
-  status: EstateStatus;
-  tag: string;
-}> = [
-  {
-    title: "Skyline Rivera",
-    location: "Centro · Corrientes",
-    status: "disponible",
-    tag: "En pozo",
-  },
-  {
-    title: "Tempo Costanera",
-    location: "Costanera",
-    status: "reservado",
-    tag: "Temporario",
-  },
-  {
-    title: "Bosque Alto",
-    location: "Parque Mitre",
-    status: "disponible",
-    tag: "Listo",
-  },
-];
-
-const estateMetrics = [
-  { label: "Leads / mes", value: "210" },
-  { label: "Ocupación temp.", value: "89%" },
-  { label: "Ventas en pozo", value: "18" },
-];
-
 const baHighlights = [
   "Catálogo inteligente",
   "Agenda de visitas",
@@ -645,7 +596,6 @@ export default function HomeClient() {
             <a href="#estimador">// estimador</a>
             <a href="#turnos">// turnos</a>
             <a href="#inmobiliaria">// inmobiliaria</a>
-            <a href="#propiedades-ba">// propiedades ba</a>
             <a href="#casos">// referencias</a>
             <a href="#contacto">// contacto</a>
           </nav>
@@ -703,9 +653,6 @@ export default function HomeClient() {
               </a>
               <a href="#inmobiliaria" onClick={() => setMenuOpen(false)}>
                 Demo inmobiliaria
-              </a>
-              <a href="#propiedades-ba" onClick={() => setMenuOpen(false)}>
-                Demo propiedades BA
               </a>
               <a href="#casos" onClick={() => setMenuOpen(false)}>
                 Referencias
@@ -1317,17 +1264,16 @@ export default function HomeClient() {
         >
           <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="space-y-6 reveal" data-reveal style={withDelay(0)}>
-              <p className="kicker">Inmobiliaria inmersiva</p>
+              <p className="kicker">Inmobiliaria</p>
               <h2 className="section-title">
-                Demo para ventas, temporarios y proyectos en pozo
+                Rediseño premium para ventas, temporarios y proyectos en pozo
               </h2>
               <p className="section-subtitle">
-                Una experiencia visual distinta para presentar inmuebles con
-                storytelling, filtros dinámicos y simuladores para inversión y
-                ocupación.
+                Una propuesta para elevar listados, temporarios y torres en pozo
+                con un flujo claro, visual y orientado a leads.
               </p>
               <div className="flex flex-wrap gap-3">
-                {estateHighlights.map((item) => (
+                {baHighlights.map((item) => (
                   <span key={item} className="chip">
                     {item}
                   </span>
@@ -1350,89 +1296,7 @@ export default function HomeClient() {
                 style={withDelay(1)}
               >
                 <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                  <span>Vista rápida</span>
-                  <span className="rounded-full bg-[rgba(11,181,139,0.18)] px-3 py-1 text-[0.65rem] font-semibold text-[var(--accent)]">
-                    Demo premium
-                  </span>
-                </div>
-                <div className="mt-5 space-y-3">
-                  {estatePreview.map((item) => (
-                    <div
-                      key={item.title}
-                      className="flex items-center justify-between rounded-2xl border border-[var(--ring)] bg-[color:var(--surface-strong)] px-4 py-3"
-                    >
-                      <div>
-                        <p className="text-sm font-semibold">{item.title}</p>
-                        <p className="text-xs text-[var(--muted)]">
-                          {item.location} · {item.tag}
-                        </p>
-                      </div>
-                      <span className={`estate-pill estate-pill--${item.status}`}>
-                        {estateStatusLabels[item.status]}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-3">
-                {estateMetrics.map((metric, index) => (
-                  <div
-                    key={metric.label}
-                    className="glass reveal card-tilt rounded-2xl p-4"
-                    data-reveal
-                    style={withDelay(index + 2)}
-                  >
-                    <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                      {metric.label}
-                    </p>
-                    <p className="mt-3 text-xl font-semibold">{metric.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="propiedades-ba"
-          className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10"
-        >
-          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
-            <div className="space-y-6 reveal" data-reveal style={withDelay(0)}>
-              <p className="kicker">Listado Propiedades BA</p>
-              <h2 className="section-title">
-                Rediseño premium para inmobiliarias en Buenos Aires
-              </h2>
-              <p className="section-subtitle">
-                Una propuesta para elevar listados, temporarios y torres en pozo
-                con un flujo claro, visual y orientado a leads.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {baHighlights.map((item) => (
-                  <span key={item} className="chip">
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-4">
-                <a className="btn-primary" href="/propiedades-ba">
-                  Abrir demo BA
-                </a>
-                <a className="btn-secondary" href="/propiedades-ba/admin">
-                  Ver panel admin
-                </a>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div
-                className="glass reveal card-tilt rounded-3xl p-6"
-                data-reveal
-                style={withDelay(1)}
-              >
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                  <span>Listado BA</span>
+                  <span>Inmobiliaria</span>
                   <span className="ba-pill ba-pill--disponible">Rediseño</span>
                 </div>
                 <div className="mt-5 space-y-3">

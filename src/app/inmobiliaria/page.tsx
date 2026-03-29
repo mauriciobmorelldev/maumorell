@@ -4,24 +4,17 @@ import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import ScrollToTop from "@/components/ui/ScrollToTop";
+import {
+  amenities,
+  neighborhoods,
+  properties,
+  statusLabels,
+  type PropertyType,
+} from "./data";
 
-type PropertyType = "tradicional" | "temporario" | "pozo" | "listo";
+type PropertyTypeFilter = "all" | PropertyType;
 
-type PropertyStatus = "disponible" | "reservado" | "vendido";
-
-type Property = {
-  id: string;
-  title: string;
-  type: PropertyType;
-  status: PropertyStatus;
-  price: number;
-  location: string;
-  area: number;
-  rooms: number;
-  tag: string;
-};
-
-const propertyTypes: Array<{ id: "all" | PropertyType; label: string }> = [
+const typeFilters: Array<{ id: PropertyTypeFilter; label: string }> = [
   { id: "all", label: "Todos" },
   { id: "tradicional", label: "Tradicional" },
   { id: "temporario", label: "Temporario" },
@@ -29,108 +22,33 @@ const propertyTypes: Array<{ id: "all" | PropertyType; label: string }> = [
   { id: "listo", label: "Listo" },
 ];
 
-const statusLabels: Record<PropertyStatus, string> = {
-  disponible: "Disponible",
-  reservado: "Reservado",
-  vendido: "Vendido",
-};
-
-const properties: Property[] = [
+const investmentStages = [
   {
-    id: "prop-01",
-    title: "Skyline Rivera",
-    type: "pozo",
-    status: "disponible",
-    price: 98000000,
-    location: "Centro · Corrientes",
-    area: 78,
-    rooms: 3,
-    tag: "Torre premium",
+    title: "Lanzamiento",
+    detail: "Reservas con valores preferenciales y comunicación clara.",
   },
   {
-    id: "prop-02",
-    title: "Tempo Costanera",
-    type: "temporario",
-    status: "reservado",
-    price: 65000,
-    location: "Costanera · 2 noches",
-    area: 52,
-    rooms: 2,
-    tag: "Full amenities",
+    title: "Avance de obra",
+    detail: "Reportes mensuales, renders y actualizaciones por hito.",
   },
   {
-    id: "prop-03",
-    title: "Bosque Alto",
-    type: "listo",
-    status: "disponible",
-    price: 135000000,
-    location: "Parque Mitre",
-    area: 96,
-    rooms: 4,
-    tag: "Entrega inmediata",
-  },
-  {
-    id: "prop-04",
-    title: "Vista Norte",
-    type: "tradicional",
-    status: "vendido",
-    price: 112000000,
-    location: "Barrio Camba",
-    area: 88,
-    rooms: 3,
-    tag: "Vista abierta",
-  },
-  {
-    id: "prop-05",
-    title: "Lago Urbano",
-    type: "pozo",
-    status: "disponible",
-    price: 89000000,
-    location: "Macrocentro",
-    area: 72,
-    rooms: 3,
-    tag: "Últimas unidades",
-  },
-  {
-    id: "prop-06",
-    title: "Tempo Río",
-    type: "temporario",
-    status: "disponible",
-    price: 54000,
-    location: "Costanera · 3 noches",
-    area: 48,
-    rooms: 2,
-    tag: "Check-in smart",
+    title: "Entrega",
+    detail: "Coordinación de entrega y postventa sin fricciones.",
   },
 ];
 
 const experienceSteps = [
   {
-    title: "Exploración inmersiva",
-    description: "Tours visuales, filtros inteligentes y shortlist inmediato.",
+    title: "Recorrido inmersivo",
+    description: "Galerías 360, tours interactivos y shortlists inteligentes.",
   },
   {
-    title: "Asesoría en tiempo real",
-    description: "Chat, WhatsApp y agenda con asesores para acelerar visitas.",
+    title: "Agenda inteligente",
+    description: "Visitas automáticas, calendario y recordatorios.",
   },
   {
     title: "Cierre guiado",
-    description: "Documentación, pagos y avances en un flujo transparente.",
-  },
-];
-
-const investmentStages = [
-  {
-    title: "Lanzamiento",
-    detail: "Reservas con precio preferencial y financiación flexible.",
-  },
-  {
-    title: "Avance de obra",
-    detail: "Reportes mensuales con renders, fotos y hitos clave.",
-  },
-  {
-    title: "Entrega",
-    detail: "Entrega de unidades y coordinación postventa.",
+    description: "Documentación, pagos y seguimiento en un solo panel.",
   },
 ];
 
@@ -146,29 +64,46 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const estateTheme = {
-  "--accent": "#0bb58b",
-  "--accent-2": "#6ec3ff",
+const baTheme = {
+  "--accent": "#1bb3a9",
+  "--accent-2": "#5b8cff",
   "--accent-3": "#ffb347",
-  "--accent-4": "#7f7cff",
+  "--accent-4": "#8ee06c",
 } as CSSProperties;
 
 export default function InmobiliariaPage() {
-  const [activeType, setActiveType] = useState<"all" | PropertyType>("all");
-  const [nightlyRate, setNightlyRate] = useState("65000");
-  const [occupancy, setOccupancy] = useState("72");
+  const [activeType, setActiveType] = useState<PropertyTypeFilter>("all");
+  const [neighborhood, setNeighborhood] = useState("all");
+  const [minRooms, setMinRooms] = useState("all");
+  const [sort, setSort] = useState("featured");
+  const [nightlyRate, setNightlyRate] = useState("72000");
+  const [occupancy, setOccupancy] = useState("76");
 
   const filteredProperties = useMemo(() => {
-    if (activeType === "all") return properties;
-    return properties.filter((property) => property.type === activeType);
-  }, [activeType]);
-
-  const featuredProperty = filteredProperties[0] ?? properties[0];
+    let list = [...properties];
+    if (activeType !== "all") {
+      list = list.filter((property) => property.type === activeType);
+    }
+    if (neighborhood !== "all") {
+      list = list.filter((property) => property.neighborhood === neighborhood);
+    }
+    if (minRooms !== "all") {
+      const rooms = Number(minRooms);
+      list = list.filter((property) => property.rooms >= rooms);
+    }
+    if (sort === "price-desc") {
+      list.sort((a, b) => b.price - a.price);
+    }
+    if (sort === "price-asc") {
+      list.sort((a, b) => a.price - b.price);
+    }
+    return list;
+  }, [activeType, minRooms, neighborhood, sort]);
 
   const nightlyRateNumber = Math.max(0, toNumber(nightlyRate));
   const occupancyNumber = Math.min(Math.max(0, toNumber(occupancy)), 100);
   const bookedNights = Math.round((occupancyNumber / 100) * 30);
-  const estimatedRevenue = nightlyRateNumber * bookedNights;
+  const revenue = nightlyRateNumber * bookedNights;
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -203,20 +138,20 @@ export default function InmobiliariaPage() {
   }, []);
 
   return (
-    <div className="estate-shell" style={estateTheme}>
+    <div className="ba-shell" style={baTheme}>
       <ScrollProgress variant="bar" position="top" />
-      <div className="estate-bg">
-        <div className="estate-orb estate-orb--a" />
-        <div className="estate-orb estate-orb--b" />
-        <div className="estate-orb estate-orb--c" />
+      <div className="ba-bg">
+        <div className="ba-orb ba-orb--one" />
+        <div className="ba-orb ba-orb--two" />
+        <div className="ba-orb ba-orb--three" />
       </div>
 
-      <header className="estate-header">
+      <header className="ba-header">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
           <a href="/" className="flex items-center gap-3">
             <div className="h-3 w-3 rounded-full bg-[var(--accent)]" />
             <span className="text-lg font-semibold tracking-tight">
-              maumorell real estate lab
+              Inmobiliaria · Demo
             </span>
           </a>
           <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)] md:flex">
@@ -239,21 +174,21 @@ export default function InmobiliariaPage() {
         <section className="mx-auto w-full max-w-6xl px-6 pb-20 pt-24">
           <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr]">
             <div className="space-y-6 reveal" data-reveal>
-              <p className="estate-kicker">Demo inmersiva</p>
-              <h1 className="estate-title">
-                Inmobiliaria inteligente para ventas, temporarios y proyectos en
-                pozo.
+              <p className="ba-kicker">Rediseño inmobiliario</p>
+              <h1 className="ba-title">
+                Encontrá tu próximo hogar con un catálogo claro, dinámico e
+                inteligente.
               </h1>
-              <p className="estate-subtitle">
-                Una experiencia inmersiva para mostrar propiedades con filtros
-                dinámicos, recorridos visuales y acciones rápidas que convierten
-                interesados en visitas.
+              <p className="ba-subtitle">
+                Una propuesta premium para mostrar departamentos tradicionales,
+                temporarios, torres en pozo y unidades listas, con animaciones
+                suaves y un flujo pensado para convertir visitas en consultas.
               </p>
-              <div className="flex flex-wrap gap-3">
-                <span className="estate-chip">Tours 360</span>
-                <span className="estate-chip">Shortlist inteligente</span>
-                <span className="estate-chip">Agenda de visitas</span>
-                <span className="estate-chip">Analytics premium</span>
+              <div className="ba-tags">
+                <span>Filtros dinámicos</span>
+                <span>Visitas programadas</span>
+                <span>Agenda con asesores</span>
+                <span>Dashboards en vivo</span>
               </div>
               <div className="flex flex-wrap gap-4">
                 <a className="btn-primary" href="#catalogo">
@@ -265,48 +200,36 @@ export default function InmobiliariaPage() {
               </div>
             </div>
 
-            <div className="estate-hero-card reveal" data-reveal>
-              <div className="estate-hero-media">
-                <div className="estate-hero-glow" />
+            <div className="ba-hero-card reveal" data-reveal>
+              <div className="ba-hero-media">
+                <div className="ba-sheen" />
               </div>
-              <div className="estate-hero-content">
+              <div className="ba-hero-content">
                 <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
                   <span>Destacado</span>
-                  <span className="estate-pill estate-pill--disponible">
-                    Disponible
-                  </span>
+                  <span className="ba-pill ba-pill--disponible">Disponible</span>
                 </div>
-                <h3 className="mt-4 text-2xl font-semibold">
-                  {featuredProperty?.title}
-                </h3>
+                <h3 className="mt-4 text-2xl font-semibold">Torre Rivera</h3>
                 <p className="mt-2 text-sm text-[var(--muted)]">
-                  {featuredProperty?.location}
+                  Puerto Madero · 3 ambientes · 78 m²
                 </p>
-                <div className="mt-5 grid grid-cols-3 gap-3">
-                  <div className="estate-metric">
-                    <p className="estate-metric__label">Superficie</p>
-                    <p className="estate-metric__value">
-                      {featuredProperty?.area} m²
-                    </p>
+                <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  <div className="ba-metric">
+                    <p className="ba-metric__label">Ticket</p>
+                    <p className="ba-metric__value">$98M</p>
                   </div>
-                  <div className="estate-metric">
-                    <p className="estate-metric__label">Ambientes</p>
-                    <p className="estate-metric__value">
-                      {featuredProperty?.rooms}
-                    </p>
+                  <div className="ba-metric">
+                    <p className="ba-metric__label">Entrega</p>
+                    <p className="ba-metric__value">Q3 2026</p>
                   </div>
-                  <div className="estate-metric">
-                    <p className="estate-metric__label">Ticket</p>
-                    <p className="estate-metric__value">
-                      {featuredProperty
-                        ? currencyFormatter.format(featuredProperty.price)
-                        : "--"}
-                    </p>
+                  <div className="ba-metric">
+                    <p className="ba-metric__label">Reservas</p>
+                    <p className="ba-metric__value">78%</p>
                   </div>
                 </div>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <span className="estate-tag">{featuredProperty?.tag}</span>
-                  <span className="estate-tag">Visita virtual</span>
+                  <span className="ba-pill">Vista al río</span>
+                  <span className="ba-pill">Amenities</span>
                 </div>
               </div>
             </div>
@@ -316,45 +239,118 @@ export default function InmobiliariaPage() {
         <section id="catalogo" className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="space-y-3 reveal" data-reveal>
-              <p className="estate-kicker">Catálogo inteligente</p>
-              <h2 className="estate-section-title">Descubrí propiedades por tipo</h2>
-              <p className="estate-subtitle">
-                Seleccioná el segmento y explorá propiedades con info completa,
-                estados y microinteracciones.
+              <p className="ba-kicker">Catálogo inteligente</p>
+              <h2 className="ba-section-title">Explorá propiedades por tipo</h2>
+              <p className="ba-subtitle">
+                Filtros claros, navegación visual y acciones rápidas para cada
+                segmento.
               </p>
             </div>
-            <div className="estate-toggle">
-              {propertyTypes.map((type) => (
+            <div className="ba-toggle">
+              {typeFilters.map((filter) => (
                 <button
-                  key={type.id}
+                  key={filter.id}
                   type="button"
-                  className={`estate-toggle__pill ${
-                    activeType === type.id ? "is-active" : ""
+                  className={`ba-toggle__pill ${
+                    activeType === filter.id ? "is-active" : ""
                   }`}
-                  onClick={() => setActiveType(type.id)}
+                  onClick={() => setActiveType(filter.id)}
                 >
-                  {type.label}
+                  {filter.label}
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="estate-grid mt-10">
+          <div className="ba-filter" data-reveal>
+            <div className="ba-filter__group">
+              <label className="ba-label">Barrio</label>
+              <select
+                className="ba-select"
+                value={neighborhood}
+                onChange={(event) => setNeighborhood(event.target.value)}
+              >
+                <option value="all">Todos</option>
+                {neighborhoods.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="ba-filter__group">
+              <label className="ba-label">Ambientes</label>
+              <select
+                className="ba-select"
+                value={minRooms}
+                onChange={(event) => setMinRooms(event.target.value)}
+              >
+                <option value="all">Todos</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
+            <div className="ba-filter__group">
+              <label className="ba-label">Ordenar por</label>
+              <select
+                className="ba-select"
+                value={sort}
+                onChange={(event) => setSort(event.target.value)}
+              >
+                <option value="featured">Destacados</option>
+                <option value="price-asc">Precio menor</option>
+                <option value="price-desc">Precio mayor</option>
+              </select>
+            </div>
+            <div className="ba-filter__amenities">
+              {amenities.map((amenity) => (
+                <span key={amenity} className="ba-amenity">
+                  {amenity}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="ba-note reveal" data-reveal>
+            <div>
+              <p className="ba-kicker">Nota</p>
+              <p className="ba-subtitle">
+                Podés entrar a la ficha completa desde estos productos de la
+                demo.
+              </p>
+            </div>
+            <div className="ba-note__links">
+              {properties.map((property) => (
+                <a
+                  key={property.id}
+                  className="ba-note__link"
+                  href={`/inmobiliaria/${property.id}`}
+                >
+                  {property.title}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="ba-grid">
             {filteredProperties.map((property, index) => (
               <article
                 key={property.id}
-                className="estate-card reveal"
+                className="ba-card reveal"
                 data-reveal
                 style={{ "--delay": `${index * 80}ms` } as CSSProperties}
               >
-                <div className="estate-card__media">
-                  <span className={`estate-pill estate-pill--${property.status}`}>
+                <div className="ba-card__media">
+                  <span className={`ba-pill ba-pill--${property.status}`}>
                     {statusLabels[property.status]}
                   </span>
+                  <span className="ba-card__tag">{property.highlight}</span>
                 </div>
-                <div className="estate-card__body">
+                <div className="ba-card__body">
                   <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                    <span>{property.location}</span>
+                    <span>{property.neighborhood}</span>
                     <span>{property.tag}</span>
                   </div>
                   <h3 className="mt-3 text-xl font-semibold">
@@ -364,12 +360,12 @@ export default function InmobiliariaPage() {
                     {property.rooms} ambientes · {property.area} m²
                   </p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="estate-price">
+                    <span className="ba-price">
                       {currencyFormatter.format(property.price)}
                     </span>
-                    <button className="estate-link" type="button">
-                      Ver detalle →
-                    </button>
+                    <a className="ba-link" href={`/inmobiliaria/${property.id}`}>
+                      Ver ficha →
+                    </a>
                   </div>
                 </div>
               </article>
@@ -380,27 +376,27 @@ export default function InmobiliariaPage() {
         <section id="temporarios" className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10">
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
             <div className="space-y-6 reveal" data-reveal>
-              <p className="estate-kicker">Temporarios</p>
-              <h2 className="estate-section-title">Simulador de ingreso mensual</h2>
-              <p className="estate-subtitle">
-                Calculá el potencial de un departamento temporario según tarifa
-                y ocupación estimada.
+              <p className="ba-kicker">Temporarios</p>
+              <h2 className="ba-section-title">Simulador de ingreso mensual</h2>
+              <p className="ba-subtitle">
+                Ajustá tarifa y ocupación para visualizar ingresos estimados en
+                departamentos temporarios.
               </p>
-              <div className="estate-sim">
-                <label className="estate-label">
+              <div className="ba-sim">
+                <label className="ba-label">
                   Tarifa por noche (ARS)
                   <input
-                    className="estate-input"
+                    className="ba-input"
                     type="number"
                     min="0"
                     value={nightlyRate}
                     onChange={(event) => setNightlyRate(event.target.value)}
                   />
                 </label>
-                <label className="estate-label">
+                <label className="ba-label">
                   Ocupación mensual (%)
                   <input
-                    className="estate-input"
+                    className="ba-input"
                     type="number"
                     min="0"
                     max="100"
@@ -409,49 +405,46 @@ export default function InmobiliariaPage() {
                   />
                 </label>
               </div>
-              <div className="estate-sim__results">
+              <div className="ba-sim__results">
                 <div>
-                  <p className="estate-metric__label">Noches ocupadas</p>
-                  <p className="estate-metric__value">{bookedNights} noches</p>
+                  <p className="ba-metric__label">Noches ocupadas</p>
+                  <p className="ba-metric__value">{bookedNights} noches</p>
                 </div>
                 <div>
-                  <p className="estate-metric__label">Ingreso estimado</p>
-                  <p className="estate-metric__value">
-                    {currencyFormatter.format(estimatedRevenue)}
+                  <p className="ba-metric__label">Ingreso estimado</p>
+                  <p className="ba-metric__value">
+                    {currencyFormatter.format(revenue)}
                   </p>
                 </div>
               </div>
-              <p className="text-xs text-[var(--muted)]">
-                Estimación referencial para comparar escenarios.
-              </p>
             </div>
 
-            <div className="estate-panel reveal" data-reveal>
-              <div className="estate-panel__header">
-                <p className="estate-kicker">Temporarios activos</p>
-                <span className="estate-pill estate-pill--disponible">89% ocup.</span>
+            <div className="ba-panel reveal" data-reveal>
+              <div className="ba-panel__header">
+                <p className="ba-kicker">Temporarios activos</p>
+                <span className="ba-pill ba-pill--disponible">88% ocup.</span>
               </div>
-              <div className="estate-panel__body">
-                <div className="estate-panel__item">
+              <div className="ba-panel__body">
+                <div className="ba-panel__item">
                   <div>
-                    <p className="estate-panel__title">Tempo Río</p>
-                    <p className="estate-panel__meta">Check-in smart · 2 huéspedes</p>
+                    <p className="ba-panel__title">Tempo Palermo</p>
+                    <p className="ba-panel__meta">Check-in smart · 2 huéspedes</p>
                   </div>
-                  <span className="estate-tag">Disponible</span>
+                  <span className="ba-pill">Disponible</span>
                 </div>
-                <div className="estate-panel__item">
+                <div className="ba-panel__item">
                   <div>
-                    <p className="estate-panel__title">Tempo Costanera</p>
-                    <p className="estate-panel__meta">Full amenities · 3 huéspedes</p>
+                    <p className="ba-panel__title">Tempo Recoleta</p>
+                    <p className="ba-panel__meta">Full amenities · 3 huéspedes</p>
                   </div>
-                  <span className="estate-tag">Reservado</span>
+                  <span className="ba-pill">Reservado</span>
                 </div>
-                <div className="estate-panel__item">
+                <div className="ba-panel__item">
                   <div>
-                    <p className="estate-panel__title">Tempo Centro</p>
-                    <p className="estate-panel__meta">Self check-in · 1 huésped</p>
+                    <p className="ba-panel__title">Tempo Microcentro</p>
+                    <p className="ba-panel__meta">Self check-in · 1 huésped</p>
                   </div>
-                  <span className="estate-tag">Disponible</span>
+                  <span className="ba-pill">Disponible</span>
                 </div>
               </div>
             </div>
@@ -461,16 +454,16 @@ export default function InmobiliariaPage() {
         <section id="pozo" className="mx-auto w-full max-w-6xl px-6 pb-24 pt-10">
           <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div className="space-y-6 reveal" data-reveal>
-              <p className="estate-kicker">Torre en pozo</p>
-              <h2 className="estate-section-title">Venta de proyectos desde el lanzamiento</h2>
-              <p className="estate-subtitle">
-                Mostrá avances, disponibilidad y beneficios de inversión con un
-                storytelling visual claro.
+              <p className="ba-kicker">Torres en pozo</p>
+              <h2 className="ba-section-title">Lanzamientos con narrativa clara</h2>
+              <p className="ba-subtitle">
+                Presentá inversión en pozo con storytelling visual, avances y
+                disponibilidad por etapa.
               </p>
-              <div className="estate-timeline">
+              <div className="ba-timeline">
                 {investmentStages.map((stage) => (
-                  <div key={stage.title} className="estate-timeline__item">
-                    <div className="estate-timeline__dot" />
+                  <div key={stage.title} className="ba-timeline__item">
+                    <div className="ba-timeline__dot" />
                     <div>
                       <h3 className="text-lg font-semibold">{stage.title}</h3>
                       <p className="text-sm text-[var(--muted)]">{stage.detail}</p>
@@ -480,19 +473,19 @@ export default function InmobiliariaPage() {
               </div>
             </div>
 
-            <div className="estate-vision reveal" data-reveal>
-              <div className="estate-vision__panel">
-                <p className="estate-kicker">Experiencia inmersiva</p>
+            <div className="ba-vision reveal" data-reveal>
+              <div className="ba-vision__panel">
+                <p className="ba-kicker">Experiencia premium</p>
                 <h3 className="mt-3 text-2xl font-semibold">
-                  Presentaciones que cierran ventas
+                  Diseñada para convertir interesados en reservas
                 </h3>
                 <p className="mt-2 text-sm text-[var(--muted)]">
-                  Renders, recorridos y dashboards para transmitir confianza y
-                  acelerar decisiones de inversión.
+                  Landing cinematográfica, catálogo inteligente y flujo de
+                  contacto rápido con asesores dedicados.
                 </p>
-                <div className="mt-6 grid gap-4 md:grid-cols-3">
+                <div className="ba-vision__cards">
                   {experienceSteps.map((step) => (
-                    <div key={step.title} className="estate-mini-card">
+                    <div key={step.title} className="ba-mini-card">
                       <h4 className="text-sm font-semibold">{step.title}</h4>
                       <p className="mt-2 text-xs text-[var(--muted)]">
                         {step.description}
@@ -501,7 +494,7 @@ export default function InmobiliariaPage() {
                   ))}
                 </div>
               </div>
-              <div className="estate-vision__image" />
+              <div className="ba-vision__image" />
             </div>
           </div>
         </section>
@@ -509,7 +502,7 @@ export default function InmobiliariaPage() {
 
       <ScrollToTop />
 
-      <footer className="estate-footer">
+      <footer className="ba-footer">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-6 px-6 text-sm text-[var(--muted)] md:flex-row md:items-center">
           <span>© 2026 Mauricio Morell. Corrientes, Argentina.</span>
           <div className="flex gap-6">
