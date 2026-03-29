@@ -167,12 +167,12 @@ const currencyFormatter = new Intl.NumberFormat("es-AR", {
   maximumFractionDigits: 0,
 });
 
-const estateTheme: CSSProperties = {
+const estateTheme = {
   "--accent": "#0bb58b",
   "--accent-2": "#6ec3ff",
   "--accent-3": "#ffb347",
   "--accent-4": "#7f7cff",
-};
+} as CSSProperties;
 
 export default function InmobiliariaAdminPage() {
   const listingMap = useMemo(

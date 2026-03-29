@@ -63,12 +63,12 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const baTheme: CSSProperties = {
+const baTheme = {
   "--accent": "#1bb3a9",
   "--accent-2": "#5b8cff",
   "--accent-3": "#ffb347",
   "--accent-4": "#8ee06c",
-};
+} as CSSProperties;
 
 export default function PropiedadesBaPage() {
   const [activeType, setActiveType] = useState<"all" | PropertyType>("all");

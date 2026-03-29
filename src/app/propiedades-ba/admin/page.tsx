@@ -224,12 +224,12 @@ const currencyFormatter = new Intl.NumberFormat("es-AR", {
   maximumFractionDigits: 0,
 });
 
-const baTheme: CSSProperties = {
+const baTheme = {
   "--accent": "#1bb3a9",
   "--accent-2": "#5b8cff",
   "--accent-3": "#ffb347",
   "--accent-4": "#8ee06c",
-};
+} as CSSProperties;
 
 export default function PropiedadesBaAdminPage() {
   const listingMap = useMemo(

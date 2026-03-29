@@ -146,12 +146,12 @@ const toNumber = (value: string) => {
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
-const estateTheme: CSSProperties = {
+const estateTheme = {
   "--accent": "#0bb58b",
   "--accent-2": "#6ec3ff",
   "--accent-3": "#ffb347",
   "--accent-4": "#7f7cff",
-};
+} as CSSProperties;
 
 export default function InmobiliariaPage() {
   const [activeType, setActiveType] = useState<"all" | PropertyType>("all");
