@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import AnimatedLogoSVG from "@/components/motion/AnimatedLogoSVG";
 import CursorReactiveParallax from "@/components/motion/CursorReactiveParallax";
-import SwipeySvgImageGrid from "@/components/motion/SwipeySvgImageGrid";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
@@ -330,6 +329,24 @@ const projects = [
     note: "Referencia de mi historial laboral.",
   },
   {
+    tag: "Referencia fashion",
+    title: "Las Pepas",
+    url: "https://www.laspepas.com.ar/",
+    description:
+      "Retail de moda con foco en catálogo, campañas y experiencia de marca.",
+    result: "Benchmark",
+    note: "Referencia LATAM.",
+  },
+  {
+    tag: "Referencia fashion",
+    title: "Cuidado con el Perro",
+    url: "https://www.cuidadoconelperro.com.mx/mujer",
+    description:
+      "Ecommerce de moda con navegación profunda y promociones dinámicas.",
+    result: "Benchmark",
+    note: "Referencia MX.",
+  },
+  {
     tag: "Proyecto entrante",
     title: "Portfolio premium marca personal",
     description:
@@ -404,12 +421,6 @@ const stats = [
   { value: "+Ventas", label: "Objetivo" },
 ];
 
-const swipeyItems = [
-  { src: "/work/market-1.svg", alt: "Preview 1", x: 0, y: 0, w: 45, h: 55 },
-  { src: "/work/market-2.svg", alt: "Preview 2", x: 50, y: 10, w: 45, h: 40 },
-  { src: "/work/market-3.svg", alt: "Preview 3", x: 20, y: 60, w: 50, h: 35 },
-];
-
 const currencyFormatter = new Intl.NumberFormat("es-AR", {
   style: "currency",
   currency: "ARS",
@@ -459,6 +470,7 @@ export default function HomeClient() {
   const promo = promoIdeas[promoIndex] ?? promoIdeas[0];
   const platform =
     platforms.find((item) => item.id === activePlatform) ?? platforms[0];
+  const carouselProjects = projects.filter((project) => project.url);
   const checkedCount = checklist.filter(Boolean).length;
   const readiness = Math.round((checkedCount / checklistItems.length) * 100);
 
@@ -583,23 +595,23 @@ export default function HomeClient() {
       </div>
 
       <header className="header-glass sticky top-0 z-40 border-b border-[var(--ring)] backdrop-blur">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center gap-6 px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="h-3 w-3 rounded-full bg-[var(--accent)]" />
             <span className="text-lg font-semibold tracking-tight">maumorell</span>
           </div>
-          <nav className="hidden items-center gap-6 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)] md:flex">
-            <a href="#servicios">// servicios</a>
-            <a href="#local">// local</a>
-            <a href="#laboratorio">// lab</a>
-            <a href="#checklist">// checklist</a>
-            <a href="#estimador">// estimador</a>
-            <a href="#turnos">// turnos</a>
-            <a href="#inmobiliaria">// inmobiliaria</a>
-            <a href="#casos">// referencias</a>
-            <a href="#contacto">// contacto</a>
+          <nav className="header-nav hidden flex-1 flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[var(--muted)] md:flex">
+            <a className="nav-link" href="#servicios">Servicios</a>
+            <a className="nav-link" href="#local">Local</a>
+            <a className="nav-link" href="#laboratorio">Laboratorio</a>
+            <a className="nav-link" href="#checklist">Checklist</a>
+            <a className="nav-link" href="#estimador">Estimador</a>
+            <a className="nav-link" href="#turnos">Turnos</a>
+            <a className="nav-link" href="#inmobiliaria">Inmobiliaria</a>
+            <a className="nav-link" href="#casos">Referencias</a>
+            <a className="nav-link" href="#contacto">Contacto</a>
           </nav>
-          <div className="flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-3">
             <button
               className="md:hidden rounded-full border border-[var(--ring)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em]"
               onClick={() => setMenuOpen((prev) => !prev)}
@@ -637,22 +649,22 @@ export default function HomeClient() {
                 Servicios
               </a>
               <a href="#local" onClick={() => setMenuOpen(false)}>
-                Enfoque local
+                Local
               </a>
               <a href="#laboratorio" onClick={() => setMenuOpen(false)}>
                 Laboratorio
               </a>
               <a href="#checklist" onClick={() => setMenuOpen(false)}>
-                Checklist local
+                Checklist
               </a>
               <a href="#estimador" onClick={() => setMenuOpen(false)}>
                 Estimador
               </a>
               <a href="#turnos" onClick={() => setMenuOpen(false)}>
-                Simulador de turnos
+                Turnos
               </a>
               <a href="#inmobiliaria" onClick={() => setMenuOpen(false)}>
-                Demo inmobiliaria
+                Inmobiliaria
               </a>
               <a href="#casos" onClick={() => setMenuOpen(false)}>
                 Referencias
@@ -1342,79 +1354,46 @@ export default function HomeClient() {
           id="casos"
           className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10"
         >
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-              <p className="kicker">Referencias </p>
-              <h2 className="section-title">Inspiración</h2>
-              <p className="section-subtitle">
-                Estos ejemplos son referencias del mercado local y exterior. El
-                objetivo es superar ese estándar en tu proyecto.
-              </p>
+          <div className="space-y-8">
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div className="space-y-4">
+                <p className="kicker">Referencias</p>
+                <h2 className="section-title">Inspiración</h2>
+                <p className="section-subtitle max-w-2xl">
+                  Estos ejemplos son referencias del mercado local y exterior.
+                  El objetivo es superar ese estándar en tu proyecto.
+                </p>
+              </div>
               <a className="btn-primary w-fit" href="#contacto">
                 Quiero un ecommerce así
               </a>
             </div>
 
-            <div className="grid gap-6">
-              <div
-                className="reveal rounded-3xl border border-[var(--ring)] bg-[color:var(--surface-strong)] p-6"
-                data-reveal
-                style={withDelay(0)}
-              >
-                <p className="kicker">Preview inmersivo</p>
-                <h3 className="mt-3 text-2xl font-semibold">
-                  Experiencia visual estilo scrollytelling
-                </h3>
-                <p className="mt-2 text-sm text-[var(--muted)]">
-                  Un vistazo al ritmo visual que vamos a construir para tu
-                  ecommerce local.
-                </p>
-                <div className="mt-5">
-                  <SwipeySvgImageGrid items={swipeyItems} revealOn="scroll" />
+            <div className="card-tilt rounded-3xl border border-[var(--ring)] bg-[color:var(--surface)] p-6">
+              <div className="flex flex-wrap items-center justify-between gap-3 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
+                <span>Proyectos</span>
+                <span className="rounded-full bg-[rgba(0,179,164,0.15)] px-3 py-1 text-[0.65rem] font-semibold text-[var(--accent-2)]">
+                  En movimiento
+                </span>
+              </div>
+              <div className="project-marquee marquee mt-6">
+                <div className="marquee-track">
+                  {carouselProjects.concat(carouselProjects).map((project, index) => (
+                    <a
+                      key={`${project.title}-${index}`}
+                      className="project-card"
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span className="project-card__tag">{project.tag}</span>
+                      <h3 className="project-card__title">{project.title}</h3>
+                      <p className="project-card__desc">{project.description}</p>
+                      <span className="project-card__cta">Visitar →</span>
+                    </a>
+                  ))}
                 </div>
               </div>
-              {projects.map((project, index) => (
-                <article
-                  key={project.title}
-                  className="reveal card-tilt rounded-3xl border border-[var(--ring)] bg-[color:var(--surface)] p-6 shadow-[0_20px_60px_rgba(15,23,42,0.1)]"
-                  data-reveal
-                  style={withDelay(index + 1)}
-                >
-                  <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                    <span>{project.tag}</span>
-                    <div className="flex items-center gap-3">
-                      {project.url ? (
-                        <a
-                          className="rounded-full border border-[var(--ring)] px-3 py-1 text-[0.65rem] font-semibold text-[var(--foreground)] transition hover:-translate-y-[1px]"
-                          href={project.url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Visitar
-                        </a>
-                      ) : null}
-                      <span className="rounded-full bg-[rgba(0,179,164,0.15)] px-3 py-1 text-[0.65rem] font-semibold text-[var(--accent-2)]">
-                        {project.result}
-                      </span>
-                    </div>
-                  </div>
-                  <h3 className="mt-4 text-2xl font-semibold">{project.title}</h3>
-                  <p className="mt-3 text-sm text-[var(--muted)]">
-                    {project.description}
-                  </p>
-                  <p className="mt-4 text-xs uppercase tracking-[0.3em] text-[var(--muted)]">
-                    {project.note}
-                  </p>
-                  <div className="mt-6 grid grid-cols-3 gap-3">
-                    {Array.from({ length: 3 }).map((_, blockIndex) => (
-                      <div
-                        key={`${project.title}-${blockIndex}`}
-                        className="h-20 rounded-2xl bg-[rgba(15,23,42,0.06)]"
-                      />
-                    ))}
-                  </div>
-                </article>
-              ))}
             </div>
           </div>
         </section>
