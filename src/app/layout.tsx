@@ -1,43 +1,17 @@
-import type { Metadata } from "next";
-import { Fraunces, Space_Grotesk } from "next/font/google";
-import MotionProvider from "@/components/providers/MotionProvider";
-import "./globals.css";
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/dm-sans';
+import type { Metadata } from 'next';
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
-  display: "swap",
-});
-
+import './globals.css';
+import { siteUrl } from '@/lib/content';
 export const metadata: Metadata = {
-  title: "Mauricio Morell | Ecommerce & Web a Medida",
-  description:
-    "Portfolio de desarrollo web y ecommerce. Sitios a medida, tiendas online y sistemas de turnos con foco en conversión.",
+ metadataBase: new URL(siteUrl || 'http://localhost:3000'),
+ ...(siteUrl ? {alternates: {canonical: siteUrl}} : {}),
+ title: { default: 'Maumorell — Desarrollo web, e-commerce y productos digitales', template: '%s | Maumorell' },
+ description: 'Desarrollo web a medida con Next.js, Magento y WooCommerce. Plataformas inmobiliarias, e-commerce e integraciones con foco en tu negocio. Conocé mis proyectos.',
+ robots: {index: Boolean(siteUrl), follow: true},
+ openGraph: {type: 'website', locale: 'es_AR', siteName: 'Maumorell', title: 'Maumorell — Ideas que se vuelven digitales', description: 'Desarrollo web, e-commerce y plataformas a medida. Del primer concepto a una experiencia que funciona.'},
+ twitter: {card: 'summary_large_image'},
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="es"
-      data-theme="light"
-      style={{ colorScheme: "light" }}
-      className={`${spaceGrotesk.variable} ${fraunces.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        <MotionProvider>{children}</MotionProvider>
-      </body>
-    </html>
-  );
-}
+export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) { return <html lang="es-AR"><body><a className="skip-link" href="#contenido">Saltar al contenido</a>{children}</body></html>; }

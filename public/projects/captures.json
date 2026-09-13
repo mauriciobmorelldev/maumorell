@@ -1,0 +1,30 @@
+[
+  {
+    "slug": "minifimy",
+    "url": "https://www.minifimy.com",
+    "finalUrl": "https://www.minifimy.com/",
+    "title": "Inicio",
+    "capturedAt": "2026-09-07T22:09:12.231Z"
+  },
+  {
+    "slug": "connexa",
+    "url": "https://catalogopropiedades.com/propiedades",
+    "finalUrl": "https://catalogopropiedades.com/propiedades",
+    "title": "Catálogo Propiedades",
+    "capturedAt": "2026-09-07T22:09:19.927Z"
+  },
+  {
+    "slug": "alojamiento-buenos-aires",
+    "url": "https://alojamientobuenosaires.com",
+    "finalUrl": "https://alojamientobuenosaires.com/",
+    "title": "Alojamiento Buenos Aires",
+    "capturedAt": "2026-09-07T22:09:27.544Z"
+  },
+  {
+    "slug": "mares",
+    "url": "https://mares-seven.vercel.app",
+    "finalUrl": "https://mares-seven.vercel.app/",
+    "title": "MARÈS Studio — Photo intelligence",
+    "capturedAt": "2026-09-13T23:25:15.9392971Z"
+  }
+]
