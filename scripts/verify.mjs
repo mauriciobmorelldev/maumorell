@@ -9,6 +9,7 @@ page.on('pageerror', e => errors.push(e.message));
 await page.goto('http://localhost:3000', { waitUntil: 'networkidle' });
 await page.waitForTimeout(1400);
 assert.equal(await page.locator('h1').count(), 1);
+assert.equal(await page.locator('.project-card').count(), 7);
 assert.match(await page.title(), /Maumorell/);
 await page.screenshot({ path: 'artifacts/desktop-hero.png' });
 for (const section of ['#proyectos','#servicios','#sobre-mi','.process','.faq','#contacto']) {
@@ -27,7 +28,7 @@ const url = await page.evaluate(() => window.__opened);
 assert.match(url, /https:\/\/wa.me\/5493794934184/);
 assert.match(decodeURIComponent(url), /Un e-commerce/);
 assert.match(decodeURIComponent(url), /Prueba portfolio/);
-for (const slug of ['connexa','minifimy','mares','alojamiento-buenos-aires']) {
+for (const slug of ['connexa','minifimy','mares','alojamiento-buenos-aires','courts','imeca','a-caballo-regalado']) {
   const response = await page.goto(`http://localhost:3000/proyectos/${slug}`);
   assert.equal(response.status(),200);
   assert.equal(await page.locator('h1').count(),1);
@@ -43,6 +44,7 @@ for (const width of [390, 768, 1440]) {
   assert.equal(overflow,false,`Overflow at ${width}`);
   if (width===390) {
     await page.screenshot({path:'artifacts/mobile-hero.png'});
+    assert.equal(/[✳✦↗↙↶↑→]/u.test(await page.locator('body').innerText()),false,'Emoji-prone unicode remains in mobile text');
     await page.getByRole('button',{name:'Abrir menú'}).click();
     await page.getByRole('navigation').getByRole('link',{name:'Lo que hago'}).click();
     assert.equal(await page.getByRole('button',{name:'Abrir menú'}).getAttribute('aria-expanded'),'false');
@@ -63,5 +65,5 @@ assert.match(html,/noindex/);
 assert.match(await (await page.request.get('http://localhost:3000/robots.txt')).text(),/Disallow: \//);
 assert.equal((await page.request.get('http://localhost:3000/opengraph-image')).status(),200);
 assert.deepEqual(errors,[]);
-console.log('PASS: static routes, 404, title/description, preview robots, OG image, brief WhatsApp, FAQ, mobile menu, 390/768/1440 overflow, reduced motion and no browser errors.');
+console.log('PASS: 7 static project routes, 404, title/description, preview robots, OG image, brief WhatsApp, FAQ, mobile menu, mobile unicode audit, 390/768/1440 overflow, reduced motion and no browser errors.');
 await browser.close();
