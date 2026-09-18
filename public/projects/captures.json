@@ -1,30 +1,51 @@
 [
   {
+    "slug": "mares",
+    "url": "https://mares-seven.vercel.app",
+    "finalUrl": "https://mares-seven.vercel.app/",
+    "title": "MARÈS Studio — Photo intelligence",
+    "capturedAt": "2026-09-17T00:13:32.417Z"
+  },
+  {
     "slug": "minifimy",
     "url": "https://www.minifimy.com",
     "finalUrl": "https://www.minifimy.com/",
     "title": "Inicio",
-    "capturedAt": "2026-09-07T22:09:12.231Z"
+    "capturedAt": "2026-09-17T00:13:40.251Z"
   },
   {
     "slug": "connexa",
     "url": "https://catalogopropiedades.com/propiedades",
     "finalUrl": "https://catalogopropiedades.com/propiedades",
     "title": "Catálogo Propiedades",
-    "capturedAt": "2026-09-07T22:09:19.927Z"
+    "capturedAt": "2026-09-17T00:13:47.770Z"
   },
   {
     "slug": "alojamiento-buenos-aires",
     "url": "https://alojamientobuenosaires.com",
     "finalUrl": "https://alojamientobuenosaires.com/",
     "title": "Alojamiento Buenos Aires",
-    "capturedAt": "2026-09-07T22:09:27.544Z"
+    "capturedAt": "2026-09-17T00:13:55.149Z"
   },
   {
-    "slug": "mares",
-    "url": "https://mares-seven.vercel.app",
-    "finalUrl": "https://mares-seven.vercel.app/",
-    "title": "MARÈS Studio — Photo intelligence",
-    "capturedAt": "2026-09-13T23:25:15.9392971Z"
+    "slug": "courts",
+    "url": "https://www.courts.com/jamaica/",
+    "finalUrl": "https://www.courts.com/jamaica/",
+    "title": "Courts | Official Online Store | Shop Now & Save",
+    "capturedAt": "2026-09-17T00:14:07.486Z"
+  },
+  {
+    "slug": "imeca",
+    "url": "https://www.imeca.com/",
+    "finalUrl": "https://www.imeca.com/",
+    "title": "Imeca Lumber & Hardware - A One Stop Home Improvement Experience – Imeca.com",
+    "capturedAt": "2026-09-17T00:14:20.155Z"
+  },
+  {
+    "slug": "a-caballo-regalado",
+    "url": "https://acaballoregalado.empretienda.com.ar/",
+    "finalUrl": "https://acaballoregalado.empretienda.com.ar/",
+    "title": "Tienda online de Acaballoregalado",
+    "capturedAt": "2026-09-17T00:14:29.786Z"
   }
 ]

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Fingerprint, MoveUpRight, RotateCcw } from 'lucide-react';
+import { ArrowUpRight, Asterisk, Fingerprint, MoveUpRight, RotateCcw } from 'lucide-react';
 
 import './badge.css';
 import Image from 'next/image';
@@ -50,24 +50,24 @@ export function IdentityBadge() {
       <div className="badge-clip" aria-hidden="true"/>
       <div className={`badge-flipper ${flipped ? 'is-flipped' : ''}`}>
         <div className="badge-face badge-front" inert={flipped} aria-hidden={flipped}>
-          <div className="badge-topline"><span>MM✳ / DIGITAL BUILDER</span><span className="badge-chip"><i/> CONNECTED</span></div>
+          <div className="badge-topline"><span className="badge-builder">MM <Asterisk size={7}/> / DIGITAL BUILDER</span><span className="badge-chip"><i/> CONNECTED</span></div>
           <div className="badge-portrait">
             <div className="portrait-grid" aria-hidden="true"/>
             <span className="portrait-index">MM—001</span>
-            {profile.portrait ? <Image className="badge-photo" src={profile.portrait} alt="Retrato de Mau Morell" fill sizes="260px" priority/> : <div className="portrait-monogram" aria-label="Iniciales de Maumorell">m<span>m</span><b>✳</b></div>}
+            {profile.portrait ? <Image className="badge-photo" src={profile.portrait} alt="Retrato de Mau Morell" fill sizes="260px" priority/> : <div className="portrait-monogram" aria-label="Iniciales de Maumorell">m<span>m</span><Asterisk aria-hidden="true"/></div>}
             <span className="portrait-caption">DESIGN MIND.<br/>DEVELOPER SOUL.</span>
             <Fingerprint className="portrait-fingerprint" size={37} strokeWidth={1}/>
           </div>
-          <div className="badge-identity"><h2>Mau Morell<span>↗</span></h2><p>CREATIVE DEVELOPER</p></div>
+          <div className="badge-identity"><h2>Mau Morell<ArrowUpRight aria-hidden="true"/></h2><p>CREATIVE DEVELOPER</p></div>
           <div className="badge-specialties"><span>NEXT.JS</span><span>MAGENTO</span><span>WOOCOMMERCE</span></div>
-          <div className="badge-bottom"><div className="badge-barcode" aria-hidden="true"/><span>IDEAS → EXPERIENCIAS</span><button type="button" onClick={() => setFlipped(true)} aria-label="Girar gafete para ver contacto"><RotateCcw size={17}/></button></div>
+          <div className="badge-bottom"><div className="badge-barcode" aria-hidden="true"/><span>IDEAS / EXPERIENCIAS</span><button type="button" onClick={() => setFlipped(true)} aria-label="Girar gafete para ver contacto"><RotateCcw size={17}/></button></div>
           <div className="badge-gloss" aria-hidden="true"/>
         </div>
         <div className="badge-face badge-back" inert={!flipped} aria-hidden={!flipped}>
-          <span className="eyebrow">EL OTRO LADO DE LA IDEA</span><span className="badge-back-star" aria-hidden="true">✳</span><h2>Lo próximo<br/>lo hacemos<br/><em>realidad.</em></h2><p>Diseño, desarrollo y criterio de negocio.<br/>Conectemos los puntos.</p><a href={contactUrl} target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp <ArrowUpRight size={20}/></a><div className="badge-back-footer"><span>@maumorell</span><button type="button" onClick={() => setFlipped(false)} aria-label="Volver al frente del gafete"><RotateCcw size={17}/></button></div>
+          <span className="eyebrow">EL OTRO LADO DE LA IDEA</span><Asterisk className="badge-back-star" aria-hidden="true"/><h2>Lo próximo<br/>lo hacemos<br/><em>realidad.</em></h2><p>Diseño, desarrollo y criterio de negocio.<br/>Conectemos los puntos.</p><a href={contactUrl} target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp <ArrowUpRight size={20}/></a><div className="badge-back-footer"><span>@maumorell</span><button type="button" onClick={() => setFlipped(false)} aria-label="Volver al frente del gafete"><RotateCcw size={17}/></button></div>
         </div>
       </div>
     </div>
-    <div className="badge-interaction-hint"><MoveUpRight size={13}/><span className="pointer-hint">AGARRÁ, ESTIRÁ Y SOLTÁ.</span><span className="touch-hint">ARRASTRÁ EL GAFETE. TOCÁ ↶ PARA GIRARLO.</span></div>
+    <div className="badge-interaction-hint"><MoveUpRight size={13}/><span className="pointer-hint">AGARRÁ, ESTIRÁ Y SOLTÁ.</span><span className="touch-hint">ARRASTRÁ EL GAFETE. USÁ EL BOTÓN PARA GIRARLO.</span></div>
   </div>;
 }
