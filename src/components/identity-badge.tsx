@@ -5,10 +5,10 @@ import { ArrowUpRight, Asterisk, Fingerprint, MoveUpRight, RotateCcw } from 'luc
 
 import './badge.css';
 import Image from 'next/image';
-import { contactUrl, profile } from '@/lib/content';
+import { contactUrl, contactUrlEn, profile } from '@/lib/content';
 
 /** CSS 3D keeps the identity visible without WebGL or JavaScript. */
-export function IdentityBadge() {
+export function IdentityBadge({locale='es'}:{locale?:'es'|'en'}) {
   const scene = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const cord = useRef<SVGPathElement>(null);
@@ -45,7 +45,7 @@ export function IdentityBadge() {
     <span className="badge-crosshair crosshair-top" aria-hidden="true">+</span>
     <span className="badge-crosshair crosshair-bottom" aria-hidden="true">+</span>
     <svg className="badge-cord" aria-hidden="true"><defs><linearGradient id="cord-material"><stop stopColor="#1d2515"/><stop offset=".5" stopColor="#394629"/><stop offset="1" stopColor="#1e2815"/></linearGradient></defs><path id="badge-cord-path" ref={cord} fill="none" stroke="url(#cord-material)" strokeWidth="28" strokeLinecap="round"/><text fill="#c2f74f" fontSize="7" letterSpacing="2"><textPath href="#badge-cord-path" startOffset="20%">MAUMORELL · CREATIVE DEVELOPER</textPath></text></svg>
-    <div className="badge-rig" ref={card} tabIndex={0} role="group" aria-label="Gafete interactivo de Mau. Arrastrá para estirar la cinta; usá las flechas con teclado y Escape para soltar.">
+    <div className="badge-rig" ref={card} tabIndex={0} role="group" aria-label={locale==='en'?"Mau's interactive badge. Drag to stretch the lanyard; use the arrow keys and Escape to release.":'Gafete interactivo de Mau. Arrastrá para estirar la cinta; usá las flechas con teclado y Escape para soltar.'}>
       <div className="badge-lanyard" aria-hidden="true"><span>MAUMORELL · CREATIVE DEVELOPER · MAUMORELL</span></div>
       <div className="badge-clip" aria-hidden="true"/>
       <div className={`badge-flipper ${flipped ? 'is-flipped' : ''}`}>
@@ -60,14 +60,14 @@ export function IdentityBadge() {
           </div>
           <div className="badge-identity"><h2>Mau Morell<ArrowUpRight aria-hidden="true"/></h2><p>CREATIVE DEVELOPER</p></div>
           <div className="badge-specialties"><span>NEXT.JS</span><span>MAGENTO</span><span>WOOCOMMERCE</span></div>
-          <div className="badge-bottom"><div className="badge-barcode" aria-hidden="true"/><span>IDEAS / EXPERIENCIAS</span><button type="button" onClick={() => setFlipped(true)} aria-label="Girar gafete para ver contacto"><RotateCcw size={17}/></button></div>
+          <div className="badge-bottom"><div className="badge-barcode" aria-hidden="true"/><span>{locale==='en'?'IDEAS / EXPERIENCES':'IDEAS / EXPERIENCIAS'}</span><button type="button" onClick={() => setFlipped(true)} aria-label={locale==='en'?'Flip badge to show contact':'Girar gafete para ver contacto'}><RotateCcw size={17}/></button></div>
           <div className="badge-gloss" aria-hidden="true"/>
         </div>
         <div className="badge-face badge-back" inert={!flipped} aria-hidden={!flipped}>
-          <span className="eyebrow">EL OTRO LADO DE LA IDEA</span><Asterisk className="badge-back-star" aria-hidden="true"/><h2>Lo próximo<br/>lo hacemos<br/><em>realidad.</em></h2><p>Diseño, desarrollo y criterio de negocio.<br/>Conectemos los puntos.</p><a href={contactUrl} target="_blank" rel="noopener noreferrer">Hablemos por WhatsApp <ArrowUpRight size={20}/></a><div className="badge-back-footer"><span>@maumorell</span><button type="button" onClick={() => setFlipped(false)} aria-label="Volver al frente del gafete"><RotateCcw size={17}/></button></div>
+          <span className="eyebrow">{locale==='en'?'THE OTHER SIDE OF THE IDEA':'EL OTRO LADO DE LA IDEA'}</span><Asterisk className="badge-back-star" aria-hidden="true"/><h2>{locale==='en'?<>Let&apos;s make<br/>what comes next<br/><em>real.</em></>:<>Lo próximo<br/>lo hacemos<br/><em>realidad.</em></>}</h2><p>{locale==='en'?<>Design, development and business thinking.<br/>Let&apos;s connect the dots.</>:<>Diseño, desarrollo y criterio de negocio.<br/>Conectemos los puntos.</>}</p><a href={locale==='en'?contactUrlEn:contactUrl} target="_blank" rel="noopener noreferrer">{locale==='en'?'Talk on WhatsApp':'Hablemos por WhatsApp'} <ArrowUpRight size={20}/></a><div className="badge-back-footer"><span>@{profile.instagram}</span><button type="button" onClick={() => setFlipped(false)} aria-label={locale==='en'?'Show the front of the badge':'Volver al frente del gafete'}><RotateCcw size={17}/></button></div>
         </div>
       </div>
     </div>
-    <div className="badge-interaction-hint"><MoveUpRight size={13}/><span className="pointer-hint">AGARRÁ, ESTIRÁ Y SOLTÁ.</span><span className="touch-hint">ARRASTRÁ EL GAFETE. USÁ EL BOTÓN PARA GIRARLO.</span></div>
+    <div className="badge-interaction-hint"><MoveUpRight size={13}/><span className="pointer-hint">{locale==='en'?'GRAB, STRETCH AND RELEASE.':'AGARRÁ, ESTIRÁ Y SOLTÁ.'}</span><span className="touch-hint">{locale==='en'?'DRAG THE BADGE. USE THE BUTTON TO FLIP IT.':'ARRASTRÁ EL GAFETE. USÁ EL BOTÓN PARA GIRARLO.'}</span></div>
   </div>;
 }

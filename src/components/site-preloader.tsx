@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-export function SitePreloader() {
+export function SitePreloader({locale='es'}:{locale?:'es'|'en'}) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
@@ -23,9 +23,9 @@ export function SitePreloader() {
     };
   }, []);
 
-  return visible ? <div className="site-preloader" role="status" aria-label="Cargando portfolio">
+  return visible ? <div className="site-preloader" role="status" aria-label={locale==='en'?'Loading portfolio':'Cargando portfolio'}>
     <div className="preloader-wordmark">mau<span>morell</span></div>
     <div className="preloader-track"><i /></div>
-    <span>PREPARANDO EXPERIENCIAS DIGITALES</span>
+    <span>{locale==='en'?'PREPARING DIGITAL EXPERIENCES':'PREPARANDO EXPERIENCIAS DIGITALES'}</span>
   </div> : null;
 }
