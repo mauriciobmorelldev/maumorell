@@ -6,4 +6,5 @@ export const projectVisuals: Record<string, { name: string; url: string; image: 
   courts: {name:'Courts',url:'https://www.courts.com/jamaica/',image:'/projects/courts.jpg'},
   imeca: {name:'Imeca',url:'https://www.imeca.com/',image:'/projects/imeca.jpg'},
   'a-caballo-regalado': {name:'A Caballo Regalado',url:'https://acaballoregalado.empretienda.com.ar/',image:'/projects/a-caballo-regalado.jpg'},
+  'lourdes-montenegro': {name:'Lourdes Montenegro',url:'https://www.lourdesmontenegro.com/',image:'/projects/lourdes-montenegro.jpg'},
 };

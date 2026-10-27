@@ -1,0 +1,5 @@
+import type {Metadata} from 'next';
+import {ArtistPortfolioService} from '@/components/artist-portfolio-service';
+import {siteUrl} from '@/lib/content';
+export const metadata:Metadata={title:'Portfolio web para artistas, bailarines y agencias de danza',description:'Diseño y desarrollo de portfolios web para bailarines, artistas escénicos, modelos y agencias de danza. Web bilingüe, fotos, videos, trayectoria, SEO y contacto para contrataciones.',keywords:['portfolio para artistas','portfolio para bailarines','web para bailarines','web para artistas','portfolio agencia de danza','diseño web para artistas','página web para bailarinas'],...(siteUrl?{alternates:{canonical:`${siteUrl}/portfolio-para-artistas`,languages:{'es-AR':`${siteUrl}/portfolio-para-artistas`,en:`${siteUrl}/en/portfolio-for-artists`}}}:{}),openGraph:{title:'Portfolios web para artistas y agencias de danza | Maumorell',description:'Una web propia para presentar identidad, trayectoria, fotografías, videos y contacto profesional.',type:'website',locale:'es_AR'}};
+export default function Page(){return <ArtistPortfolioService locale="es"/>}
