@@ -1,0 +1,5 @@
+import type {Metadata} from 'next';
+import {ArtistPortfolioService} from '@/components/artist-portfolio-service';
+import {siteUrl} from '@/lib/content';
+export const metadata:Metadata={title:'Portfolio websites for artists, dancers and dance agencies',description:'Custom portfolio websites for dancers, performing artists, models and dance agencies. Bilingual content, photography, video, credits, SEO and booking contact paths.',keywords:['portfolio website for dancers','website for performing artists','dance agency portfolio','dancer portfolio website','artist website design'],...(siteUrl?{alternates:{canonical:`${siteUrl}/en/portfolio-for-artists`,languages:{'es-AR':`${siteUrl}/portfolio-para-artistas`,en:`${siteUrl}/en/portfolio-for-artists`}}}:{}),openGraph:{title:'Portfolio websites for artists and dance agencies | Maumorell',description:'A digital home for presenting identity, credits, photography, video and booking details.',type:'website',locale:'en_US'}};
+export default function Page(){return <ArtistPortfolioService locale="en"/>}
