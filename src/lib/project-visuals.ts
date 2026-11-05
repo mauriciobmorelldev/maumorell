@@ -7,4 +7,5 @@ export const projectVisuals: Record<string, { name: string; url: string; image: 
   imeca: {name:'Imeca',url:'https://www.imeca.com/',image:'/projects/imeca.jpg'},
   'a-caballo-regalado': {name:'A Caballo Regalado',url:'https://acaballoregalado.empretienda.com.ar/',image:'/projects/a-caballo-regalado.jpg'},
   'lourdes-montenegro': {name:'Lourdes Montenegro',url:'https://www.lourdesmontenegro.com/',image:'/projects/lourdes-montenegro.jpg'},
+  'rosario-juarez': {name:'Rosario Juarez',url:'https://rosariojuarez.vercel.app/',image:'/projects/rosario-juarez.jpg'},
 };
