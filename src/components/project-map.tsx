@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {ArrowUpRight, X} from 'lucide-react';
 import gsap from 'gsap';
 import {ProjectArt} from './project-art';
+import {projectVisuals} from '@/lib/project-visuals';
 import type {projects as projectData} from '@/lib/content';
 import './project-map.css';
 
@@ -67,13 +68,13 @@ export function ProjectMap({projects, locale = 'es'}: {projects: typeof projectD
 
   return <div className="project-constellation">
     <div className="map-controls"><div className="map-filters" role="group" aria-label={en ? 'Filter projects' : 'Filtrar proyectos'}>{groups.map((value, index) => <button key={value} type="button" aria-pressed={filter === value} onClick={() => setFilter(value)}>{labels[index]}</button>)}</div><span className="map-count" aria-live="polite">{String(visible.length).padStart(2, '0')} {en ? 'PROJECTS' : 'PROYECTOS'}</span></div>
-    <p className="map-instruction">{en ? 'Different worlds. Connected by design. Select a project to explore.' : 'Mundos distintos. Conectados por el diseño. Elegí un proyecto para explorarlo.'}</p>
+    <p className="map-instruction">{en ? 'Select a project.' : 'Elegí un proyecto.'}</p>
     <div className="map-universe" ref={map}>
       <svg className="map-connections" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true"><path d="M160 150L500 420L830 150 M160 500L500 420L830 500 M160 850L500 420L830 850 M500 150L500 850"/></svg>
-      {visible.map(project => <article className={`map-node map-${group(project.slug)}`} key={project.slug}><button type="button" className="map-project" aria-haspopup="dialog" onClick={event => {origin.current = event.currentTarget; setSelected(project);}}><div className="map-thumbnail"><ProjectArt slug={project.slug}/><span className="map-open"><ArrowUpRight size={20}/></span></div><div className="map-node-label"><span className="map-number">{project.number}</span><div><h3>{project.name}</h3><p>{project.headline}</p></div></div></button></article>)}
+      {visible.map(project => <article className={`map-node map-${group(project.slug)}`} key={project.slug}><button type="button" className="map-project" aria-haspopup="dialog" onClick={event => {origin.current = event.currentTarget; setSelected(project);}}><div className="map-thumbnail"><ProjectArt slug={project.slug}/><span className="map-open"><ArrowUpRight size={20}/></span></div><div className="map-node-label"><span className="map-number">{project.number}</span><div><h3>{project.name}</h3></div></div></button></article>)}
     </div>
     <dialog className="map-dialog" ref={dialog} aria-labelledby="map-dialog-title" onCancel={event => {event.preventDefault(); setSelected(null);}} onClick={event => {if(event.target === event.currentTarget) setSelected(null);}}>
-      {selected && <div className="map-dialog-content"><button className="map-close" type="button" onClick={() => setSelected(null)} aria-label={en ? 'Close project' : 'Cerrar proyecto'} autoFocus><X size={23}/></button><div className="map-dialog-art"><ProjectArt slug={selected.slug}/></div><div className="map-dialog-copy"><span className="eyebrow">{selected.category}</span><h3 id="map-dialog-title">{selected.name}</h3><p>{selected.description}</p><Link className="button primary" href={`${en ? '/en/projects' : '/proyectos'}/${selected.slug}`}>{en ? 'View full project' : 'Ver el proyecto completo'} <ArrowUpRight size={18}/></Link></div></div>}
+      {selected && <div className="map-dialog-content"><button className="map-close" type="button" onClick={() => setSelected(null)} aria-label={en ? 'Close project' : 'Cerrar proyecto'} autoFocus><X size={23}/></button><div className="map-dialog-art"><ProjectArt slug={selected.slug}/></div><div className="map-dialog-copy"><span className="eyebrow">{selected.category}</span><h3 id="map-dialog-title">{selected.name}</h3><p>{selected.headline}</p><a className="button primary" href={projectVisuals[selected.slug]?.url} target="_blank" rel="noopener noreferrer">{en ? 'Visit website' : 'Visitar web'} <ArrowUpRight size={18}/></a><Link className="map-case-link" href={`${en ? '/en/projects' : '/proyectos'}/${selected.slug}`}>{en ? 'About this project' : 'Sobre el proyecto'}</Link></div></div>}
     </dialog>
   </div>;
 }
