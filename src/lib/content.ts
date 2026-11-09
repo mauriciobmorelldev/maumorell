@@ -1,7 +1,7 @@
 export const profile = { name: 'Maumorell', whatsapp: '5493794934184', instagram: 'maurimorell', portrait: '' };
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://maumorelldev.com';
-export const contactUrl = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent('Hola Mau, me gustaría conversar sobre un proyecto.')}`;
-export const contactUrlEn = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent("Hi Mau, I'd like to talk about a project.")}`;
+export const contactUrl = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent('Hola Mau, me gustaría pedir una propuesta para mi proyecto.')}`;
+export const contactUrlEn = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent("Hi Mau, I'd like to request a proposal for my project.")}`;
 export const instagramUrl = `https://www.instagram.com/${profile.instagram}/`;
 export const projects = [
  { slug: 'connexa', name: 'Connexa', category: 'REAL ESTATE · PRODUCTO DIGITAL', type: 'Next.js', number: '01', color: 'lime', headline: 'De propiedades sueltas a una operación conectada.', description: 'Una plataforma inmobiliaria construida desde cero. Catálogo público, gestión de propiedades y herramientas para el trabajo comercial, en un mismo ecosistema.', challenge: 'Conectar la experiencia de quien busca una propiedad con la operación diaria de quien la comercializa.', approach: 'Desarrollo con Next.js y Supabase, gestión de imágenes, catálogo y un módulo CRM separado para evolucionar la operación comercial.', scope: ['Catálogo y fichas de propiedades', 'Administración y gestión de contenido', 'CRM, agenda y seguimiento comercial', 'Optimización de entrega de imágenes'], note: 'La exploración de conversaciones omnicanal está en etapa de demo: no implica canales de mensajería conectados en producción.', stack: ['Next.js', 'TypeScript', 'Supabase', 'CRM'] },
