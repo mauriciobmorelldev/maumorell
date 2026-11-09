@@ -1,5 +1,5 @@
 export const profile = { name: 'Maumorell', whatsapp: '5493794934184', instagram: 'maurimorell', portrait: '' };
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '');
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://maumorelldev.com';
 export const contactUrl = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent('Hola Mau, me gustaría conversar sobre un proyecto.')}`;
 export const contactUrlEn = `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent("Hi Mau, I'd like to talk about a project.")}`;
 export const instagramUrl = `https://www.instagram.com/${profile.instagram}/`;
